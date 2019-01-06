@@ -1,0 +1,5 @@
+{
+    "mongo_uri" : "mongodb://localhost:27017/hyphen",
+    "port":7034,
+    "jwt_secret":"@34#991`$%HYPn&#@!*3"
+}
