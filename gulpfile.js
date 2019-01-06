@@ -8,7 +8,7 @@ var runSequence = require('run-sequence');
 gulp.task('nodemon', function (cb) {
     var started = false;
     return nodemon({
-        script: 'server.js',
+        script: './bin/www',
         ext: 'js json',
         env: { "NODE_ENV": "development" },
         ignore: [
