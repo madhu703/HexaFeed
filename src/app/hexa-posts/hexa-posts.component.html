@@ -1,3 +1,35 @@
-<p>
-  hexa-posts works!
-</p>
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right btn btn-success" routerLink="/hxd-add-post">Add Post </div>
+      <div class="card mt-3" *ngFor="let post of posts;let index=index">
+        <div class="card-body">
+          <h5 class="card-title">POST:{{post.post_title}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{post.post_created_date |date: 'dd/MM/yyyy HH:mma' }}</h6>
+          <p class="card-text bg-light p-2">{{post.post_message}}</p>
+          <hr />
+          <div class="form-group">
+            <div class="input-group">
+              <input type='text' class="form-control" name="addcomment_{{index}}_name" id="addcomment_{{index}}"
+                (ngModel)='addcomment_text[index]' placeholder="commentHere" #CommentHere="ngModel">
+              <div class="input-group-append">
+                <div class="btn btn-light text-success" (click)="updateComment(post,index,CommentHere.value)">
+                  Go
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <p><b>Comments:{{ post.comments.length || 0}}</b></p>
+          <div *ngIf="post && post.comments.length">
+            <div *ngFor="let indComment of post.comments;let comindex">
+              <div><span class="font-weight-bold ml-0">{{indComment.commented_username}}</span>&nbsp;&nbsp;&nbsp;<span
+                  class="mr-0">{{indComment.commented_date | date: 'dd/MM/yyyy HH:mma'}}</span></div>
+              <p>{{indComment.message}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import {RouterModule} from '@angular/router';
 import { AppComponent } from './app.component';
 import { RestServiceService } from './rest-service.service';
 import { LoginComponent } from './login/login.component';
@@ -23,7 +24,8 @@ import { AuthGuard } from './guards/auth-guard.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    RouterModule
   ],
   providers: [RestServiceService, AuthGuard],
   bootstrap: [AppComponent]

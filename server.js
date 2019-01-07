@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const config = require('config')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const port = config.port ? config.port : 8000
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -16,6 +17,7 @@ const options = {
   // If not connected, return errors immediately rather than waiting for reconnect
   bufferMaxEntries: 0,
   keepAlive: 120,
+  useNewUrlParser: true ,
   promiseLibrary: global.Promise
 }
 let processexit = false;
@@ -41,9 +43,14 @@ db.on('disconnected', function () {
 mongoose.connect(config.mongo_uri, options)
   .then(() => console.log('connection succesful'))
   .catch((err) => console.error(err))
+mongoose.set('debug', true);
+
+
+app.use(cors())
 
 // Accessing Router.js
 require('./REST/Routers')(app)
+
 
 
 process.on('uncaughtException', function (err) {

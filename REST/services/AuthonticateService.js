@@ -1,7 +1,10 @@
 'use strict;'
 const UsersModel = require('./../models/UsersModel')
+const JWT = require('jsonwebtoken')
+const config = require('config')
+
 const AuthenticateService = module.exports
-AuthenticateService.login = function (request, response) {
+AuthenticateService.login =  (request, response)=> {
   let uiData = request.body
 
   if (!uiData.email || !uiData.password) {
@@ -10,7 +13,7 @@ AuthenticateService.login = function (request, response) {
   let filter = {}
   filter.email = uiData.email
 
-  UsersModel.findOne(filter, function (error, usersInfo) {
+  UsersModel.findOne(filter,  (error, usersInfo)=> {
     if (error) {
       console.log('AUTHERR:', error)
       return response.send({ error: true, err_code: 'DBERR', message: 'Internal Server Error.Please try again.' })
@@ -27,7 +30,7 @@ AuthenticateService.login = function (request, response) {
   // return response.send({ error: null, data: 'Successfully applied login' })
 }
 
-AuthenticateService.signup = function (request, response) {
+AuthenticateService.signup =  (request, response)=> {
   let uiData = request.body
   if (!uiData.email || !uiData.password || !uiData.full_name || !uiData.mobile) {
     return response.send({ error: true, err_code: 'INPTNOFLDERR', message: 'Please provide All Details to signup.' })
@@ -63,4 +66,23 @@ AuthenticateService.signup = function (request, response) {
     // }))
   })
   // return response.send({ error: null, data: 'Successfully applied signup' })
+}
+
+
+
+AuthenticateService.userAuthenticate = (apiReq, apiRes, next_service) =>{
+  var authentication_token = apiReq.headers['hxd-access-token']
+  if (authentication_token) {
+    JWT.verify(authentication_token, config.jwt_secret, function (token_verify_error, token_data) {
+      if (token_verify_error){
+        console.log(`TOKEN ERROR: ${token_verify_error}`)
+        return apiRes.send({error:'User authentication failed.', error_code:'AUTHTOKENERR'})
+      } else {
+        apiReq.user = token_data
+        next_service()
+      }
+    })
+  } else {
+    return apiRes.send({'error':'User authentication failed.','error_code':'AUTHTOKENNOTFOUND'})
+  }
 }

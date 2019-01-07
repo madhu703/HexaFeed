@@ -1,3 +1,32 @@
-<p>
-  add-post works!
-</p>
+<div class="container">
+  <div class="card">
+    <div class="card-heading">
+    </div>
+    <div class="card-body">
+      <form #AddPostForm="ngForm">
+        <div class="form-group">
+          <label for="posttitle"><b>PostTitle</b></label>
+          <input type='text' name="posttitle" id='posttitle' class="form-control" placeholder="Add your post title"
+            [(ngModel)]="newpost.title" #Title="ngModel" required>
+          <div>
+            <span class="text-danger" *ngIf='Title.touched && Title.invalid'>Post Title Required*</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="newpostdata"><b>Add your New Post</b></label>
+          <textarea rows="5" cols="30" name="newpostdata" class="form-control" placeholder="Add your post" [(ngModel)]="newpost.message" #PostMsg="ngModel" required>
+          </textarea>
+          <div>
+            <span class="text-danger" *ngIf="PostMsg.touched && PostMsg.invalid"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-lg btn-success" (click)="onAddNewPost(AddPostForm)">Add Post</button>
+        </div>
+        <div *ngIf="post_info" class="text-info">
+          {{post_info}}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

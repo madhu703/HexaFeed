@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
       }
       localStorage.setItem('hd_auth_token', response.data.login_token);
       console.log('login response is:', response);
-      return this.router.navigate(['/hxd-posts']);
+      this.router.navigate(['/hxd-posts']);
+      return ;
     });
   }
 }

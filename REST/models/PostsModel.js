@@ -5,8 +5,11 @@ var Schema = mongoose.Schema
 var users = new Schema({
   user_id: {
     type: String,
-    unique: true,
     required: true
+  },
+  post_title:{
+    type:String,
+    required:true
   },
   post_message: {
     type: String
@@ -19,7 +22,7 @@ var users = new Schema({
     default: 1
   },
   comments: {
-      type :Object
+      type :Array
   },
   post_created_date: {
     type: Number,
@@ -28,7 +31,7 @@ var users = new Schema({
 }, {
     versionKey: false
   })
-  
+users.index({user_id:1})
 users.methods.generateHashPassword = function (password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
 }
@@ -47,4 +50,4 @@ users.methods.createJWT = function () {
   return JWT.sign(resTokenInfo, config.jwt_secret)
 }
 
-module.exports = mongoose.model('users', users)
+module.exports = mongoose.model('posts', users)
