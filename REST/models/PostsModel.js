@@ -1,37 +1,34 @@
 var mongoose = require('mongoose')
-const JWT = require('jsonwebtoken')
 const config = require('config')
 var Schema = mongoose.Schema
 
-var bcrypt = require('bcrypt-nodejs')
 var users = new Schema({
-  email: {
+  user_id: {
     type: String,
     unique: true,
     required: true
   },
-  password: {
-    type: String,
-    required: true
-  },
-  full_name: {
+  post_message: {
     type: String
   },
-  mobile: {
+  attachment: {
     type: String
   },
   status: {
     type: Number,
     default: 1
   },
-  created_date: {
+  comments: {
+      type :Object
+  },
+  post_created_date: {
     type: Number,
     default: Date.now
   }
 }, {
     versionKey: false
   })
-
+  
 users.methods.generateHashPassword = function (password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
 }
@@ -44,7 +41,7 @@ users.methods.createJWT = function () {
   let exptime = parseInt(Date.now + (7 * 24 * 60 * 60 * 1000))
   let resTokenInfo = {}
   resTokenInfo.id = this._id
-  resTokenInfo.name = this.full_name
+  resTokenInfo.name = (this.first_name) + ' ' + this.last_name
   resTokenInfo.eamil = this.email
   resTokenInfo.exp_time = exptime
   return JWT.sign(resTokenInfo, config.jwt_secret)

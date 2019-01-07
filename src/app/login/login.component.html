@@ -1,0 +1,32 @@
+<div class="card text-center col-6 margin-center">
+  <div class="card-header">LogIn</div>
+  <div class="card-body">
+      <form #LogInInfo=ngForm>
+          <div class="form-group">
+              <label>Email:</label>
+              <input type="email" name="email" id="email" [(ngModel)]=login_data.email #LogEmail="ngModel" required />
+              <div *ngIf="LogEmail.touched && LogEmail.invalid">
+                  <span class="text-danger">
+                      Email required*
+                  </span>
+              </div>
+          </div>
+          <div class="form-group">
+              <label>Password:</label>
+              <input type="password" name="password" id="password" [(ngModel)]=login_data.password #LogPwd="ngModel"
+                  required />
+              <div *ngIf="LogPwd.touched && LogPwd.invalid">
+                  <span class="text-danger">
+                      Password required*
+                  </span>
+              </div>
+          </div>
+          <div class="text-center">
+              <button type="button" class="bg-info btn-lg" (click)="onLogin(LogInInfo)">Submit</button>
+              <br/>
+              <span class="text-danger" *ngIf="login_errors.sub_err">{{login_errors.sub_err}}</span>
+          </div>
+      </form>
+  </div>
+</div>
+<!-- </div> -->
