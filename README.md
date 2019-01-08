@@ -15,3 +15,9 @@ Then run `npm start` which lets you navigate to `http://localhost:7402/`.
  Navigate `http://localhost:7402/signup` for signup new user.
  
  once Logged in successfully.you will automatically redirected to HexaFeed main page.
+
+## Note
+
+  If node server don't open by gulp automatically,Please run `gulp` in another commandline.It will open node server in 
+  
+  `http://localhost:7034` .
