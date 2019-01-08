@@ -78,6 +78,10 @@ AuthenticateService.userAuthenticate = (apiReq, apiRes, next_service) =>{
         console.log(`TOKEN ERROR: ${token_verify_error}`)
         return apiRes.send({error:'User authentication failed.', error_code:'AUTHTOKENERR'})
       } else {
+        console.log(`TOKEN DATA ${token_data} and current Date ${Date.now()}`)
+        if(token_data.exp_time < Date.now()){
+          return apiRes.send({'error':'User Authentication failed.Please login','error_code':'AUTHTOKENNOTFOUND'})
+        }
         apiReq.user = token_data
         next_service()
       }

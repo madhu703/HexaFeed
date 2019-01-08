@@ -2,9 +2,12 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right btn btn-success" routerLink="/hxd-add-post">Add Post </div>
+      <div *ngIf="!posts.length" style="margin-top:3%"> 
+        <p class="text-info alert alert-info text-center">New posts are not available.Please add any Posts</p>
+      </div>
       <div class="card mt-3" *ngFor="let post of posts;let index=index">
         <div class="card-body">
-          <h5 class="card-title">POST:{{post.post_title}}</h5>
+          <h5 class="card-title font-weight-bold">{{post.post_title}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{post.post_created_date |date: 'dd/MM/yyyy HH:mma' }}</h6>
           <p class="card-text bg-light p-2">{{post.post_message}}</p>
           <hr />

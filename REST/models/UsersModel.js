@@ -41,7 +41,7 @@ users.methods.validPassword = function (password) {
 }
 
 users.methods.createJWT = function () {
-  let exptime = parseInt(Date.now + (7 * 24 * 60 * 60 * 1000))
+  let exptime = parseInt(Date.now() + (7 * 24 * 60 * 60 * 1000))
   let resTokenInfo = {}
   resTokenInfo.id = this._id
   resTokenInfo.name = this.full_name
